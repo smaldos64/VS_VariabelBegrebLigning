@@ -19,6 +19,7 @@ using VariabelBegreb.Models;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using VariabelBegreb.NumberSystems;
+using System.Windows.Threading;
 
 namespace VariabelBegreb
 {
@@ -28,6 +29,10 @@ namespace VariabelBegreb
     public partial class MainWindow : Window
     {
         private static List<TextBox> TextBoxList = new List<TextBox>();
+
+        private DispatcherTimer RadixSystemTimer = new DispatcherTimer();
+        private TextBox TextBox_Object = new TextBox();
+        private NumberSystem NumberSystem_Object = new BinaryNumber();
 
         public ObservableCollection<EquationSystemRow> EquationSystemRows { get; set; }
         public static char StartCoefficientChar = 'x';
@@ -39,6 +44,8 @@ namespace VariabelBegreb
         public MainWindow()
         {
             InitializeComponent();
+
+            SetupRadixSystemTimer();
 
             InitializeDrivingCalculationLabels();
 
@@ -1511,14 +1518,18 @@ namespace VariabelBegreb
             NumberSystem_Object = new DecimalNumber();
             TextBox_Object = txtDecimalNumber;
             TextBox_Object.Text = NumberSystem_Object.ConvertFromRadix10(Radix10Value);
+
+            NumberSystem_Object = new OctalNumber();
+            TextBox_Object = txtOctalNumber;
+            TextBox_Object.Text = NumberSystem_Object.ConvertFromRadix10(Radix10Value);
         }
 
         private void txtCheckForValidNumberSystemKeyPressed(object sender, KeyEventArgs e)
         {
-            NumberSystem NumberSystem_Object = new BinaryNumber();
-            bool ValidKey = true;
-            TextBox TextBox_Object = new TextBox();
-            int Radix10Value = -1;
+            //NumberSystem NumberSystem_Object = new BinaryNumber();
+            //bool ValidKey = true;
+            //TextBox TextBox_Object = new TextBox();
+            //int Radix10Value = -1;
 
             switch (((System.Windows.FrameworkElement)sender).Name)
             {
@@ -1537,11 +1548,13 @@ namespace VariabelBegreb
                     break;
 
                 case "txtOctalNumber":
-
+                    NumberSystem_Object = new OctalNumber();
+                    TextBox_Object = txtOctalNumber;
                     break;
 
                 case "txtHexadecimalNumber":
-
+                    //NumberSystem_Object = new HexadecimalNumber();
+                    //TextBox_Object = txtBinaryNumber;
                     break;
 
                 default:
@@ -1556,14 +1569,28 @@ namespace VariabelBegreb
             }
             else
             {
-                Radix10Value = NumberSystem_Object.ConvertToRadix10(TextBox_Object.Text);
+                RadixSystemTimer.Start();
             }
-
-            //if (!KeyHelper.IsKeyPressedValidPositive(((System.Windows.Controls.TextBox)sender).Text, e.Key))
+            //else
             //{
-            //    SystemSounds.Beep.Play();
-            //    e.Handled = true;
+            //    Radix10Value = NumberSystem_Object.ConvertToRadix10(TextBox_Object.Text + e.Key.ToString());
+            //    UpdateRadixNumbersTextBoxes(Radix10Value);
             //}
+        }
+
+        private void RadixSystemTimer_Tick(object sender, EventArgs e)
+        {
+            int Radix10Value;
+
+            RadixSystemTimer.Stop();
+            Radix10Value = NumberSystem_Object.ConvertToRadix10(TextBox_Object.Text);
+            UpdateRadixNumbersTextBoxes(Radix10Value);
+        }
+
+        private void SetupRadixSystemTimer()
+        {
+            RadixSystemTimer.Interval = TimeSpan.FromMilliseconds(20);
+            RadixSystemTimer.Tick += RadixSystemTimer_Tick;
         }
 
         #endregion

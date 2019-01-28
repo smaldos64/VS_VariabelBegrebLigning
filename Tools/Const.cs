@@ -26,7 +26,7 @@ namespace VariabelBegreb.Tools
         {
             this.RadixNumber = RadixNumber;
             this.RadixSpaceCounter = RadixSpaceCounter;
-            this.RadixSpaceCounter = RadixSpaceCharacter;
+            this.RadixSpaceCharacter = RadixSpaceCharacter;
         }
     }
 

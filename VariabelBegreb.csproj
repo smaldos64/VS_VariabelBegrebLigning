@@ -62,8 +62,10 @@
     <Compile Include="NumberSystems\BinaryNumber.cs" />
     <Compile Include="NumberSystems\DecimalNumber.cs" />
     <Compile Include="NumberSystems\Delegates.cs" />
+    <Compile Include="NumberSystems\HexadecimalNumber.cs" />
     <Compile Include="NumberSystems\INumberSystem.cs" />
     <Compile Include="NumberSystems\NumberSystem.cs" />
+    <Compile Include="NumberSystems\OctalNumber.cs" />
     <Compile Include="Tools\Const.cs" />
     <Compile Include="Tools\ControlTools.cs" />
     <Compile Include="Tools\Extension.cs" />
