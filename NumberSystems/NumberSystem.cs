@@ -10,14 +10,15 @@ namespace VariabelBegreb.NumberSystems
 {
     public abstract class NumberSystem
     {
-        public int ConvertNumberToRadix10(string Text)
-        {
-            return (1);
-        }
+        //public int ConvertNumberToRadix10(string Text)
+        //{
+        //    return (1);
+        //}
 
         public abstract bool IsKeyValid(Key ThisKey);
 
-        public virtual string ConvertFromRadix10(int NumberToConvert, int Radix, int RadixSpaceCounter)
+        public virtual string ConvertFromRadix10(int NumberToConvert, int RadixValue, int RadixSpaceCounter,
+                                                 char RadixSeperationCharacter)
         {
             int NumberCalculated = 0;
             int Carry = 0;
@@ -27,19 +28,45 @@ namespace VariabelBegreb.NumberSystems
             do
             {
                 StringCounter++;
-                NumberCalculated = NumberToConvert / Radix;
-                Carry = NumberToConvert % Radix;
+                NumberCalculated = NumberToConvert / RadixValue;
+                Carry = NumberToConvert % RadixValue;
                 OutputString += Carry.ToString("X");
 
                 if (0 == StringCounter % RadixSpaceCounter)
                 {
-                    OutputString += " ";
+                    OutputString += RadixSeperationCharacter;
                 }
 
                 NumberToConvert = NumberCalculated;
             } while (NumberCalculated > 0);
 
             return (StringHelper.ReverseString(OutputString));
+        }
+
+        public virtual int ConvertToRadix10(string RadixStringToConvert, RadixNumber_ENUM Radix)
+        {
+            //string RadixOutputString;
+            int Radix10Value = 0;
+
+            RadixStringToConvert = StringHelper.ReverseString(RadixStringToConvert);
+
+            for (int Counter = 0; Counter < RadixStringToConvert.Length; Counter++)
+            {
+                if (RadixNumber_ENUM.HEXADECIMAL_NUMBER == Radix)
+                {
+                    Radix10Value += (int)Math.Pow((int)Radix, Counter) * int.Parse(RadixStringToConvert[Counter].ToString(),
+                        System.Globalization.NumberStyles.HexNumber);
+                }
+                else
+                {
+                    Radix10Value += (int)Math.Pow((int)Radix, Counter) * (int)Char.GetNumericValue(RadixStringToConvert[Counter]);
+                }
+            }
+
+            return (Radix10Value);
+            //RadixOutputString = DecimalValue.ToString();
+
+            //return (RadixOutputString);
         }
     }
 }

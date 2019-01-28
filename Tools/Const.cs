@@ -20,11 +20,13 @@ namespace VariabelBegreb.Tools
     {
         public RadixNumber_ENUM RadixNumber { get; set; }
         public int RadixSpaceCounter { get; set; }
+        public char RadixSpaceCharacter { get; set; }
 
-        public ConstRadixSystem(RadixNumber_ENUM RadixNumber, int RadixSpaceCounter)
+        public ConstRadixSystem(RadixNumber_ENUM RadixNumber, int RadixSpaceCounter, char RadixSpaceCharacter)
         {
             this.RadixNumber = RadixNumber;
             this.RadixSpaceCounter = RadixSpaceCounter;
+            this.RadixSpaceCounter = RadixSpaceCharacter;
         }
     }
 
@@ -32,20 +34,34 @@ namespace VariabelBegreb.Tools
     {
         public static readonly ConstRadixSystem[] RadixSystemArray =
         {
-            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.BINARY_NUMBER, RadixSpaceCounter : 4),
-            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.OCTAL_NUMBER, RadixSpaceCounter : 3),
-            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.HEXADECIMAL_NUMBER, RadixSpaceCounter : 4)
+            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.BINARY_NUMBER, RadixSpaceCounter : 4, RadixSpaceCharacter : ' '),
+            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.OCTAL_NUMBER, RadixSpaceCounter : 3, RadixSpaceCharacter : ' '),
+            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.HEXADECIMAL_NUMBER, RadixSpaceCounter : 4, RadixSpaceCharacter : ' '),
+            new ConstRadixSystem(RadixNumber : RadixNumber_ENUM.DECIMAL_NUMBER, RadixSpaceCounter : 3, RadixSpaceCharacter : '.')
         };
 
         public static ConstRadixSystem FindRadixSystem(RadixNumber_ENUM RadixNumber)
         {
             int RadixSystemCounter = 0;
 
+            do
+            {
+                if (RadixNumber == RadixSystemArray[RadixSystemCounter].RadixNumber)
+                {
+                    return (RadixSystemArray[RadixSystemCounter]);
+                }
+                else
+                {
+                    RadixSystemCounter++;
+                }
+            } while (RadixSystemCounter < RadixSystemArray.Length);
 
+            return (null);
         }
 
         #region General_Stuff
         public const int NumberFormatError = -1;
+        public const int RadixNumberNotFound = -1;
         #endregion
 
         #region Const_FirstOrderEquation

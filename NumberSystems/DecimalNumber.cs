@@ -21,7 +21,22 @@ namespace VariabelBegreb.NumberSystems
 
         public string ConvertFromRadix10(int Radix10Number)
         {
-            return (Radix10Number.ToString());
+            //return (Radix10Number.ToString());
+
+            string ReturnString = " ";
+            ConstRadixSystem ConstRadixSystem_Object = Const.FindRadixSystem(RadixNumber_ENUM.DECIMAL_NUMBER);
+
+            if (null != ConstRadixSystem_Object)
+            {
+                ReturnString = base.ConvertFromRadix10(Radix10Number, (int)RadixNumber_ENUM.DECIMAL_NUMBER,
+                    ConstRadixSystem_Object.RadixSpaceCounter, ConstRadixSystem_Object.RadixSpaceCharacter);
+            }
+            else
+            {
+                MessageBox.Show("Der er vist en SW bug her !!!");
+            }
+
+            return (ReturnString);
         }
 
         public int ConvertToRadix10(string RadixStringToConvert)
