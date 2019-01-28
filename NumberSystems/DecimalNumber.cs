@@ -19,7 +19,7 @@ namespace VariabelBegreb.NumberSystems
             return (ValidKeysArray.Contains(ThisKey) || KeyHelper.IsKeyPressedValicControlKey(ThisKey));
         }
 
-        public string ConvertFromRadix10(int Radix10Number)
+        public override string ConvertFromRadix10(int Radix10Number)
         {
             //return (Radix10Number.ToString());
 
@@ -39,7 +39,7 @@ namespace VariabelBegreb.NumberSystems
             return (ReturnString);
         }
 
-        public int ConvertToRadix10(string RadixStringToConvert)
+        public override int ConvertToRadix10(string RadixStringToConvert)
         {
             int Radix10Number;
 

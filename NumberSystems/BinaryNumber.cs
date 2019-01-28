@@ -20,7 +20,7 @@ namespace VariabelBegreb.NumberSystems
             return (ValidKeysArray.Contains(ThisKey) || KeyHelper.IsKeyPressedValicControlKey(ThisKey));
         }
 
-        public string ConvertFromRadix10(int Radix10Number)
+        public override string ConvertFromRadix10(int Radix10Number)
         {
             string ReturnString = " ";
             ConstRadixSystem ConstRadixSystem_Object = Const.FindRadixSystem(RadixNumber_ENUM.BINARY_NUMBER);
@@ -38,7 +38,7 @@ namespace VariabelBegreb.NumberSystems
             return (ReturnString);
         }
 
-        public int ConvertToRadix10(string RadixStringToConvert)
+        public override int ConvertToRadix10(string RadixStringToConvert)
         {
             int Radix10Value = base.ConvertToRadix10(RadixStringToConvert, RadixNumber_ENUM.BINARY_NUMBER);
 

@@ -1501,6 +1501,71 @@ namespace VariabelBegreb
             ControlTools.ClearTextBoxes(TextBoxList);
         }
 
+        private void UpdateRadixNumbersTextBoxes(int Radix10Value)
+        {
+            TextBox TextBox_Object = new TextBox();
+            NumberSystem NumberSystem_Object = new BinaryNumber();
+            TextBox_Object = txtBinaryNumber;
+            TextBox_Object.Text = NumberSystem_Object.ConvertFromRadix10(Radix10Value);
+
+            NumberSystem_Object = new DecimalNumber();
+            TextBox_Object = txtDecimalNumber;
+            TextBox_Object.Text = NumberSystem_Object.ConvertFromRadix10(Radix10Value);
+        }
+
+        private void txtCheckForValidNumberSystemKeyPressed(object sender, KeyEventArgs e)
+        {
+            NumberSystem NumberSystem_Object = new BinaryNumber();
+            bool ValidKey = true;
+            TextBox TextBox_Object = new TextBox();
+            int Radix10Value = -1;
+
+            switch (((System.Windows.FrameworkElement)sender).Name)
+            {
+                case "txtRomerNumber":
+
+                    break;
+
+                case "txtDecimalNumber":
+                    NumberSystem_Object = new DecimalNumber();
+                    TextBox_Object = txtDecimalNumber;
+                    break;
+
+                case "txtBinaryNumber":
+                    NumberSystem_Object = new BinaryNumber();
+                    TextBox_Object = txtBinaryNumber;
+                    break;
+
+                case "txtOctalNumber":
+
+                    break;
+
+                case "txtHexadecimalNumber":
+
+                    break;
+
+                default:
+
+                    break;
+            }
+
+            if (!NumberSystem_Object.IsKeyValid(e.Key))
+            {
+                SystemSounds.Beep.Play();
+                e.Handled = true;
+            }
+            else
+            {
+                Radix10Value = NumberSystem_Object.ConvertToRadix10(TextBox_Object.Text);
+            }
+
+            //if (!KeyHelper.IsKeyPressedValidPositive(((System.Windows.Controls.TextBox)sender).Text, e.Key))
+            //{
+            //    SystemSounds.Beep.Play();
+            //    e.Handled = true;
+            //}
+        }
+
         #endregion
 
         /* General code below. */
@@ -1509,7 +1574,6 @@ namespace VariabelBegreb
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //TextBoxList.Clear();
-
 
             if (null != ((System.Windows.FrameworkElement)MainTabControl.SelectedItem))
             {
@@ -1592,62 +1656,8 @@ namespace VariabelBegreb
                 e.Handled = true;
             }
         }
-
-        private void txtCheckForValidNumberSystemKeyPressed(object sender, KeyEventArgs e)
-        {
-            NumberSystem NumberSystem_Object = new BinaryNumber();
-            bool ValidKey = true;
-
-            switch (((System.Windows.FrameworkElement)sender).Name)
-            {
-                case "txtRomerNumber":
-
-                    break;
-
-                case "txtDecimalNumber":
-
-                    break;
-
-                case "txtBinaryNumber":
-                    NumberSystem_Object = new BinaryNumber();
-                    break;
-
-                case "txtOctalNumber":
-
-                    break;
-
-                case "txtHexadecimalNumber":
-
-                    break;
-
-                default:
-
-                    break;
-            }
-
-            if (!NumberSystem_Object.IsKeyValid(e.Key))
-            {
-                SystemSounds.Beep.Play();
-                e.Handled = true;
-            }
-            //if (!KeyHelper.IsKeyPressedValidPositive(((System.Windows.Controls.TextBox)sender).Text, e.Key))
-            //{
-            //    SystemSounds.Beep.Play();
-            //    e.Handled = true;
-            //}
-        }
-
+        
         #endregion
-
-        private void txtBinaryNumber_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            //NumberSystem NumberSystem_Object = new BinaryNumber();
-            //if (!NumberSystem_Object.IsKeyValid(e.Text))
-            //{
-            //    SystemSounds.Beep.Play();
-            //    e.Handled = true;
-            //}
-
-        }
+      
     }
 }

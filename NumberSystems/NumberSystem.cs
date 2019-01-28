@@ -10,12 +10,9 @@ namespace VariabelBegreb.NumberSystems
 {
     public abstract class NumberSystem
     {
-        //public int ConvertNumberToRadix10(string Text)
-        //{
-        //    return (1);
-        //}
-
         public abstract bool IsKeyValid(Key ThisKey);
+
+        public abstract string ConvertFromRadix10(int Radix10Number);
 
         public virtual string ConvertFromRadix10(int NumberToConvert, int RadixValue, int RadixSpaceCounter,
                                                  char RadixSeperationCharacter)
@@ -42,6 +39,8 @@ namespace VariabelBegreb.NumberSystems
 
             return (StringHelper.ReverseString(OutputString));
         }
+
+        public abstract int ConvertToRadix10(string RadixStringToConvert);
 
         public virtual int ConvertToRadix10(string RadixStringToConvert, RadixNumber_ENUM Radix)
         {
